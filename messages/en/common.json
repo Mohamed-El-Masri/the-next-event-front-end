@@ -1,0 +1,100 @@
+{
+  "title": "The Next Event",
+  "subtitle": "Innovating What Comes Next",
+  "hero": {
+    "title": "The Next Event",
+    "description": "Saudi-based event management and innovation company dedicated to creating transformative experiences that align with Saudi Arabia's Vision 2030.",
+    "subtitle": "Our vision is to become the go-to marketplace for events, connecting innovators, creators, and communities across the Kingdom while fostering innovation, culture, and sustainable development.",
+    "cta": {
+      "planEvent": "Plan Your Event",
+      "partnerWithUs": "Partner With Us",
+      "joinMarketplace": "Join as Service Provider"
+    }
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "about": {
+    "title": "About Us",
+    "description": "The Next Event is a Saudi-based event management and innovation company dedicated to creating transformative experiences that align with Saudi Arabia's Vision 2030.",
+    "vision": "Our vision is to become the go-to marketplace for events, connecting innovators, creators, and communities across the Kingdom while fostering innovation, culture, and sustainable development."
+  },
+  "services": {
+    "title": "Our Services",
+    "eventManagement": {
+      "title": "Event Management",
+      "description": "Comprehensive event planning and execution services"
+    },
+    "corporateEvents": {
+      "title": "Corporate Events",
+      "description": "Professional corporate conferences and workshops"
+    },
+    "innovationPrograms": {
+      "title": "Innovation Programs",
+      "description": "Hackathons, bootcamps and innovation initiatives"
+    },
+    "culturalExperiences": {
+      "title": "Cultural Experiences",
+      "description": "Creative and cultural event experiences"
+    }
+  },
+  "projects": {
+    "title": "Upcoming Projects",
+    "hayathon": {
+      "title": "Hayathon",
+      "subtitle": "Quality of Life Hackathon",
+      "location": "Al Khobar | November 6-8, 2025",
+      "description": "250 innovators collaborating on wellbeing, fitness, culture, and sustainability solutions for enhanced quality of life in Saudi Arabia.",
+      "cta": "Become a Sponsor"
+    },
+    "herfathon": {
+      "title": "Herfathon",
+      "subtitle": "Crafts & Cultural Innovation Hackathon",
+      "location": "Eastern Province (Al-Ahsa) | Early 2026",
+      "description": "Innovators and artisans co-create sustainable, modern, and digital craft solutions while preserving Saudi cultural heritage.",
+      "cta": "Partner With Us"
+    }
+  },
+  "marketplace": {
+    "title": "Join Our Marketplace",
+    "description": "Connect with Saudi Arabia's most innovative event ecosystem. We bring together venues, catering, entertainment, design, and technology providers with event organizers nationwide.",
+    "cta": "Apply as Service Provider"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "info": {
+      "email": "Email",
+      "phone": "Phone",
+      "followUs": "Follow Us"
+    },
+    "form": {
+      "name": "Name",
+      "organization": "Organization",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Message",
+      "submit": "Send Message",
+      "namePlaceholder": "Your Name",
+      "organizationPlaceholder": "Your Organization",
+      "emailPlaceholder": "your@email.com",
+      "phonePlaceholder": "+966 XXX XXX XXX",
+      "messagePlaceholder": "Tell us about your project..."
+    }
+  },
+  "footer": {
+    "tagline": "Innovating What Comes Next",
+    "quickLinks": "Quick Links",
+    "language": "Language",
+    "aboutUs": "About Us",
+    "services": "Services",
+    "projects": "Projects",
+    "contact": "Contact",
+    "english": "English",
+    "arabic": "العربية",
+    "copyright": "© 2024 The Next Event. All rights reserved."
+  }
+}
