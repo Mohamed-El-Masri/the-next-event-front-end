@@ -1,10 +1,18 @@
 'use client';
 
 import { useLocale, useTranslations } from 'next-intl';
+import { useRouter, usePathname } from 'next/navigation';
 
 export default function Footer() {
   const locale = useLocale();
   const t = useTranslations();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const switchLanguage = (newLocale: string) => {
+    const newPath = pathname.replace(`/${locale}`, `/${newLocale}`);
+    router.push(newPath);
+  };
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -82,6 +90,7 @@ export default function Footer() {
             </h4>
             <div className="flex space-x-2 rtl:space-x-reverse">
               <button
+                onClick={() => switchLanguage('en')}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                   locale === 'en'
                     ? 'text-white'
@@ -95,6 +104,7 @@ export default function Footer() {
                 {t('footer.english')}
               </button>
               <button
+                onClick={() => switchLanguage('ar')}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                   locale === 'ar'
                     ? 'text-white'

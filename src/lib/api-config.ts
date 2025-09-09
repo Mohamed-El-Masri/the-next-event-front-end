@@ -146,6 +146,68 @@ export interface ContactFormData {
   };
 }
 
+export interface EventPlanningFormData {
+  formType: 'event-planning';
+  submitterName: string;
+  submitterEmail: string;
+  submitterPhone: string;
+  organization: string;
+  eventType: 'corporate' | 'wedding' | 'cultural' | 'innovation' | 'conference' | 'other';
+  eventTitle: string;
+  eventDescription: string;
+  eventDate: string;
+  eventDuration: number; // in hours
+  guestCount: number;
+  venue?: string;
+  budget: string;
+  services: string[];
+  specialRequirements?: string;
+  additionalData?: Record<string, string | number | boolean | string[]>;
+}
+
+export interface ServiceProviderApplicationFormData {
+  formType: 'service-provider';
+  submitterName: string;
+  submitterEmail: string;
+  submitterPhone: string;
+  companyName: string;
+  serviceCategory: 'venue' | 'catering' | 'entertainment' | 'design' | 'technology' | 'photography' | 'security' | 'transportation' | 'other';
+  businessLicense: string;
+  experience: string;
+  portfolioUrl?: string;
+  servicesOffered: string[];
+  coverageAreas: string[];
+  description: string;
+  additionalData?: Record<string, string | number | boolean | string[]>;
+}
+
+export interface PartnershipFormData {
+  formType: 'partnership';
+  submitterName: string;
+  submitterEmail: string;
+  submitterPhone: string;
+  organizationName: string;
+  organizationType: 'government' | 'corporate' | 'ngo' | 'startup' | 'university' | 'other';
+  partnershipType: 'sponsorship' | 'collaboration' | 'venue-partner' | 'technology-partner' | 'strategic-alliance' | 'other';
+  proposalDescription: string;
+  expectedBenefits: string;
+  resources: string;
+  timeline: string;
+  additionalData?: Record<string, string | number | boolean | string[]>;
+}
+
+export interface FeedbackFormData {
+  formType: 'feedback';
+  submitterName?: string;
+  submitterEmail?: string;
+  eventName: string;
+  rating: number; // 1-5
+  feedbackCategory: 'event-quality' | 'service' | 'venue' | 'organization' | 'suggestion' | 'complaint' | 'other';
+  feedbackText: string;
+  recommendationScore: number; // 1-10 NPS score
+  additionalData?: Record<string, string | number | boolean | string[]>;
+}
+
 // SEO Types
 export interface SEOConfiguration {
   id?: number;

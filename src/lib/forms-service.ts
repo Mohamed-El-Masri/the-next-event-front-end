@@ -1,11 +1,71 @@
 import { apiClient } from './api-client';
-import { API_CONFIG, FormSubmission, ContactFormData, PaginatedResponse, FormStatistics } from './api-config';
+import { API_CONFIG, FormSubmission, ContactFormData, EventPlanningFormData, ServiceProviderApplicationFormData, PartnershipFormData, FeedbackFormData, PaginatedResponse, FormStatistics } from './api-config';
 
 export class FormsService {
   /**
    * إرسال نموذج الاتصال (public endpoint)
    */
   async submitContactForm(formData: ContactFormData): Promise<FormSubmission> {
+    try {
+      const response = await apiClient.post<FormSubmission>(
+        API_CONFIG.ENDPOINTS.FORMS.SUBMIT,
+        formData
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * إرسال نموذج تخطيط الفعاليات (public endpoint)
+   */
+  async submitEventPlanningForm(formData: EventPlanningFormData): Promise<FormSubmission> {
+    try {
+      const response = await apiClient.post<FormSubmission>(
+        API_CONFIG.ENDPOINTS.FORMS.SUBMIT,
+        formData
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * إرسال نموذج تطبيق مقدم الخدمة (public endpoint)
+   */
+  async submitServiceProviderApplication(formData: ServiceProviderApplicationFormData): Promise<FormSubmission> {
+    try {
+      const response = await apiClient.post<FormSubmission>(
+        API_CONFIG.ENDPOINTS.FORMS.SUBMIT,
+        formData
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * إرسال نموذج الشراكة (public endpoint)
+   */
+  async submitPartnershipForm(formData: PartnershipFormData): Promise<FormSubmission> {
+    try {
+      const response = await apiClient.post<FormSubmission>(
+        API_CONFIG.ENDPOINTS.FORMS.SUBMIT,
+        formData
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * إرسال نموذج الملاحظات والتقييم (public endpoint)
+   */
+  async submitFeedbackForm(formData: FeedbackFormData): Promise<FormSubmission> {
     try {
       const response = await apiClient.post<FormSubmission>(
         API_CONFIG.ENDPOINTS.FORMS.SUBMIT,
@@ -209,6 +269,124 @@ export class FormsService {
     }
 
     return { basicInfo, additionalInfo };
+  }
+
+  /**
+   * الحصول على النماذج المرسلة بحسب النوع (للإدارة فقط)
+   */
+  async getFormSubmissionsByType(formType: string, params?: {
+    page?: number;
+    pageSize?: number;
+    status?: string;
+    dateFrom?: string;
+    dateTo?: string;
+    search?: string;
+  }): Promise<PaginatedResponse<FormSubmission>> {
+    return await apiClient.get<PaginatedResponse<FormSubmission>>(
+      API_CONFIG.ENDPOINTS.FORMS.BASE,
+      { ...params, formType }
+    );
+  }
+
+  /**
+   * الحصول على إحصائيات الفورم بحسب النوع (للإدارة فقط)
+   */
+  async getFormStatisticsByType(formType?: string): Promise<FormStatistics & { byType: Record<string, number> }> {
+    const response = await apiClient.get<FormStatistics & { byType: Record<string, number> }>(
+      API_CONFIG.ENDPOINTS.FORMS.STATISTICS,
+      formType ? { formType } : undefined
+    );
+    return response;
+  }
+
+  /**
+   * الحصول على أنواع الفورم المتاحة
+   */
+  getAvailableFormTypes(): string[] {
+    return ['contact', 'event-planning', 'service-provider', 'partnership', 'feedback'];
+  }
+
+  /**
+   * الحصول على تسميات أنواع الفورم باللغة العربية
+   */
+  getFormTypeLabels(): Record<string, string> {
+    return {
+      'contact': 'نموذج الاتصال',
+      'event-planning': 'نموذج تخطيط الفعاليات',
+      'service-provider': 'نموذج مقدم الخدمة',
+      'partnership': 'نموذج الشراكة',
+      'feedback': 'نموذج الملاحظات والتقييم'
+    };
+  }
+
+  /**
+   * التحقق من صحة البيانات بحسب نوع الفورم
+   */
+  validateFormData(formType: string, formData: ContactFormData | EventPlanningFormData | ServiceProviderApplicationFormData | PartnershipFormData | FeedbackFormData): { isValid: boolean; errors: string[] } {
+    const errors: string[] = [];
+
+    // التحقق من الحقول الأساسية المشتركة
+    if (!formData.submitterName?.trim()) {
+      errors.push('اسم المرسل مطلوب');
+    }
+    if (!formData.submitterEmail?.trim()) {
+      errors.push('البريد الإلكتروني مطلوب');
+    }
+
+    // التحقق حسب نوع الفورم
+    switch (formType) {
+      case 'contact':
+        const contactData = formData as ContactFormData;
+        if (!contactData.message?.trim()) {
+          errors.push('الرسالة مطلوبة');
+        }
+        break;
+
+      case 'event-planning':
+        const eventData = formData as EventPlanningFormData;
+        if (!eventData.eventTitle?.trim()) {
+          errors.push('عنوان الفعالية مطلوب');
+        }
+        if (!eventData.eventDate) {
+          errors.push('تاريخ الفعالية مطلوب');
+        }
+        if (!eventData.guestCount || eventData.guestCount < 1) {
+          errors.push('عدد الضيوف يجب أن يكون أكبر من صفر');
+        }
+        break;
+
+      case 'service-provider':
+        const serviceData = formData as ServiceProviderApplicationFormData;
+        if (!serviceData.companyName?.trim()) {
+          errors.push('اسم الشركة مطلوب');
+        }
+        if (!serviceData.serviceCategory) {
+          errors.push('فئة الخدمة مطلوبة');
+        }
+        break;
+
+      case 'partnership':
+        const partnerData = formData as PartnershipFormData;
+        if (!partnerData.organizationName?.trim()) {
+          errors.push('اسم المؤسسة مطلوب');
+        }
+        if (!partnerData.proposalDescription?.trim()) {
+          errors.push('وصف المقترح مطلوب');
+        }
+        break;
+
+      case 'feedback':
+        const feedbackData = formData as FeedbackFormData;
+        if (!feedbackData.eventName?.trim()) {
+          errors.push('اسم الفعالية مطلوب');
+        }
+        if (!feedbackData.rating || feedbackData.rating < 1 || feedbackData.rating > 5) {
+          errors.push('التقييم يجب أن يكون بين 1 و 5');
+        }
+        break;
+    }
+
+    return { isValid: errors.length === 0, errors };
   }
 }
 

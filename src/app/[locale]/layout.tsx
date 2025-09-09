@@ -4,21 +4,23 @@ import { notFound } from 'next/navigation';
 import { Locale, locales } from '../../../i18n.config';
 import "./globals.css";
 
+interface Props {
+  children: React.ReactNode;
+  params: Promise<{ locale: Locale }>;
+}
+
 export default async function LocaleLayout({
   children,
   params
-}: {
-  children: React.ReactNode;
-  params: Promise<{ locale: Locale }>;
-}) {
+}: Props) {
   const { locale } = await params;
   
   if (!locales.includes(locale)) notFound();
 
-  const messages = await getMessages();
+  const messages = await getMessages({ locale });
 
   return (
-    <NextIntlClientProvider messages={messages}>
+    <NextIntlClientProvider messages={messages} locale={locale}>
       {children}
     </NextIntlClientProvider>
   );
