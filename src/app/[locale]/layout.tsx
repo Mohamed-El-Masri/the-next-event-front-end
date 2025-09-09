@@ -13,8 +13,10 @@ export default async function LocaleLayout({
   children,
   params
 }: Props) {
-  const { locale } = await params;
+  const resolvedParams = await params;
+  const locale = resolvedParams.locale as Locale;
   
+  // Type assertion to ensure locale is recognized as Locale type
   if (!locales.includes(locale)) notFound();
 
   const messages = await getMessages({ locale });
