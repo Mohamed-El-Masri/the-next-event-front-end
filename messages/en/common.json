@@ -84,7 +84,10 @@
       "organizationPlaceholder": "Your Organization",
       "emailPlaceholder": "your@email.com",
       "phonePlaceholder": "+966 XXX XXX XXX",
-      "messagePlaceholder": "Tell us about your project..."
+      "messagePlaceholder": "Tell us about your project...",
+      "successMessage": "Message sent successfully! We'll get back to you soon.",
+      "errorMessage": "Something went wrong. Please try again.",
+      "sendingMessage": "Sending..."
     }
   },
   "footer": {
@@ -98,6 +101,102 @@
     "english": "English",
     "arabic": "العربية",
     "copyright": "© 2024 The Next Event. All rights reserved."
+  },
+  "forms": {
+    "eventPlanning": {
+      "title": "Event Planning Form",
+      "subtitle": "Fill out this form to get a free consultation for planning your event",
+      "sections": {
+        "submitterInfo": "Submitter Information",
+        "eventDetails": "Event Details",
+        "requiredServices": "Required Services",
+        "specialRequirements": "Special Requirements"
+      },
+      "fields": {
+        "submitterName": {
+          "label": "Full Name *",
+          "placeholder": "Your full name"
+        },
+        "organization": {
+          "label": "Organization or Company *",
+          "placeholder": "Organization or company name"
+        },
+        "submitterEmail": {
+          "label": "Email Address *",
+          "placeholder": "your@email.com"
+        },
+        "submitterPhone": {
+          "label": "Phone Number *",
+          "placeholder": "+966 XXX XXX XXX"
+        },
+        "eventType": {
+          "label": "Event Type *"
+        },
+        "eventTitle": {
+          "label": "Event Title *",
+          "placeholder": "Event title"
+        },
+        "eventDescription": {
+          "label": "Event Description",
+          "placeholder": "Write a detailed description of the event..."
+        },
+        "eventDate": {
+          "label": "Event Date *"
+        },
+        "eventDuration": {
+          "label": "Event Duration (hours) *"
+        },
+        "guestCount": {
+          "label": "Expected Guest Count *"
+        },
+        "budget": {
+          "label": "Expected Budget"
+        },
+        "venue": {
+          "label": "Suggested Venue (optional)",
+          "placeholder": "Venue name or preferred area"
+        },
+        "specialRequirements": {
+          "label": "Special Requirements or Additional Notes",
+          "placeholder": "Any special requirements or additional details..."
+        }
+      },
+      "eventTypes": {
+        "corporate": "Corporate Events",
+        "wedding": "Weddings",
+        "cultural": "Cultural Events",
+        "innovation": "Innovation Events",
+        "conference": "Conferences",
+        "other": "Other"
+      },
+      "services": {
+        "eventManagement": "Event Management",
+        "venuesPlaces": "Venues and Places",
+        "foodHospitality": "Food and Hospitality",
+        "entertainmentShows": "Entertainment and Shows",
+        "designDecoration": "Design and Decoration",
+        "technologyAudio": "Technology and Audio",
+        "photographyVideo": "Photography and Video",
+        "securityProtection": "Security and Protection",
+        "transportation": "Transportation",
+        "marketingAdvertising": "Marketing and Advertising"
+      },
+      "budget": {
+        "placeholder": "Choose budget",
+        "lessThan50k": "Less than 50,000 SAR",
+        "50kTo100k": "50,000 - 100,000 SAR",
+        "100kTo250k": "100,000 - 250,000 SAR",
+        "250kTo500k": "250,000 - 500,000 SAR",
+        "moreThan500k": "More than 500,000 SAR"
+      },
+      "buttons": {
+        "submit": "Submit Planning Request",
+        "submitting": "Sending..."
+      },
+      "messages": {
+        "submitError": "An error occurred while submitting the form"
+      }
+    }
   },
   "auth": {
     "login": {
@@ -123,58 +222,99 @@
     },
     "dashboard": {
       "title": "Dashboard",
-      "welcome": "Welcome back, {{name}}!",
-      "stats": {
-        "totalForms": "Total Forms",
-        "totalUsers": "Total Users",
-        "todaySubmissions": "Today's Submissions",
-        "activeEvents": "Active Events"
-      },
-      "quickActions": {
-        "title": "Quick Actions",
-        "viewForms": "View Forms",
-        "manageUsers": "Manage Users",
-        "createEvent": "Create Event",
-        "viewReports": "View Reports"
-      },
-      "recentActivity": {
-        "title": "Recent Activity",
-        "noActivity": "No recent activity"
-      },
-      "profile": {
-        "title": "Profile",
-        "editProfile": "Edit Profile",
-        "changePassword": "Change Password",
-        "logout": "Logout"
-      }
-    },
-    "dashboard": {
-      "title": "Dashboard",
       "welcome": "Welcome back",
+      "loading": "Loading...",
+      "logout": "Logout",
+      "exportData": "Export Data",
+      "clearFilters": "Clear Filters",
+      "searchPlaceholder": "Search submissions...",
+      "allForms": "All Forms",
       "overview": {
         "title": "Overview",
         "totalSubmissions": "Total Submissions",
         "pendingReviews": "Pending Reviews",
         "activeUsers": "Active Users",
-        "systemStatus": "System Status"
+        "completedForms": "Completed Forms",
+        "totalRevenue": "Total Revenue",
+        "systemStatus": "System Status",
+        "monthlyGrowth": "from last month",
+        "needsReview": "needs review",
+        "completedForm": "completed form",
+        "thisMonth": "this month",
+        "lastUpdate": "Last update: 1 minute ago"
+      },
+      "quickActions": {
+        "formSubmissions": {
+          "title": "Form Submissions",
+          "description": "Manage form submissions"
+        },
+        "contentManagement": {
+          "title": "Content Management",
+          "description": "Edit website content"
+        },
+        "mediaLibrary": {
+          "title": "Media Library",
+          "description": "Manage images and files"
+        },
+        "analytics": {
+          "title": "Analytics",
+          "description": "Reports and statistics"
+        }
       },
       "forms": {
         "title": "Form Submissions",
-        "contact": "Contact Forms",
+        "description": "Latest submitted requests",
+        "contact": "Contact",
         "eventPlanning": "Event Planning",
         "serviceProvider": "Service Providers",
         "partnership": "Partnerships",
         "feedback": "Feedback",
-        "viewAll": "View All",
+        "viewAll": "View All Submissions",
         "markAsRead": "Mark as Read",
         "reply": "Reply",
-        "export": "Export",
+        "export": "Export Data",
+        "delete": "Delete",
+        "details": "Details",
+        "noSubmissions": "No recent submissions",
+        "submittedAt": "Submitted at:",
+        "lastUpdated": "Last updated:",
+        "assignedTo": "Assigned to:",
+        "pagination": {
+          "previous": "← Previous",
+          "next": "Next →",
+          "page": "Page",
+          "of": "of"
+        },
+        "formTypes": {
+          "contact": "Contact Form",
+          "eventPlanning": "Event Planning",
+          "serviceProvider": "Service Providers",
+          "partnership": "Partnerships",
+          "feedback": "Feedback"
+        },
+        "priority": {
+          "urgent": "Urgent",
+          "high": "High",
+          "medium": "Medium",
+          "low": "Low"
+        },
         "status": {
           "new": "New",
           "inProgress": "In Progress",
           "completed": "Completed",
           "archived": "Archived"
         }
+      },
+      "errors": {
+        "loadSubmissions": "Failed to load submissions",
+        "loadDashboard": "Failed to load dashboard data",
+        "markAsRead": "Failed to mark as read",
+        "updateStatus": "Failed to update status",
+        "deleteSubmission": "Failed to delete submission",
+        "exportData": "Failed to export data"
+      },
+      "confirmations": {
+        "deleteSubmission": "Are you sure you want to delete this submission?"
       },
       "content": {
         "title": "Content Management",

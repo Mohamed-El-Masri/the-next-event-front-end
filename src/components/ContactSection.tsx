@@ -247,7 +247,7 @@ export default function ContactSection() {
               {submitStatus === 'success' && (
                 <div className="p-4 rounded-xl bg-green-50 border border-green-200">
                   <p className="text-green-800 text-center font-medium">
-                    Message sent successfully! We&apos;ll get back to you soon.
+                    {t('contact.form.successMessage')}
                   </p>
                 </div>
               )}
@@ -255,7 +255,7 @@ export default function ContactSection() {
               {submitStatus === 'error' && (
                 <div className="p-4 rounded-xl bg-red-50 border border-red-200">
                   <p className="text-red-800 text-center font-medium">
-                    Something went wrong. Please try again.
+                    {t('contact.form.errorMessage')}
                   </p>
                 </div>
               )}
@@ -268,7 +268,7 @@ export default function ContactSection() {
                 {isSubmitting ? (
                   <>
                     <Loader2 size={20} className="animate-spin" />
-                    <span>Sending...</span>
+                    <span>{t('contact.form.sendingMessage')}</span>
                   </>
                 ) : (
                   <>

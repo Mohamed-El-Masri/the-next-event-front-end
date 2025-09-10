@@ -22,7 +22,7 @@ export default function LanguageSwitcher() {
         onChange={(e) => switchLanguage(e.target.value)}
         className="text-sm border border-gray-300 rounded px-2 py-1">
         <option value="en">English</option>
-        <option value="ar">???????</option>
+        <option value="ar">العربية</option>
       </select>
     </div>
   );

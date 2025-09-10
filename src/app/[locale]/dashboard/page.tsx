@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../../components/ui/card';
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
@@ -23,6 +24,7 @@ export default function DashboardPage() {
   const params = useParams();
   const router = useRouter();
   const locale = params.locale as string;
+  const t = useTranslations('dashboard');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [stats, setStats] = useState<DashboardStats>({
@@ -55,7 +57,7 @@ export default function DashboardPage() {
       setTotalPages(response.totalPages);
     } catch (error) {
       console.error('Failed to load submissions:', error);
-      setError('فشل في تحميل الطلبات');
+      setError(t('errors.loadSubmissions'));
     }
   }, [selectedFormType, searchTerm, currentPage]);
 
@@ -64,16 +66,16 @@ export default function DashboardPage() {
       setIsLoading(true);
       setError(null);
 
-      // جلب الإحصائيات
+      // Fetch statistics
       const statsData = await dashboardService.getDashboardStats();
       setStats(statsData);
 
-      // جلب الطلبات مع الفلاتر
+      // Fetch submissions with filters
       await loadSubmissions();
 
     } catch (error) {
       console.error('Failed to load dashboard data:', error);
-      setError('فشل في تحميل بيانات لوحة التحكم');
+      setError(t('errors.loadDashboard'));
     } finally {
       setIsLoading(false);
     }
@@ -91,10 +93,10 @@ export default function DashboardPage() {
     try {
       setIsUpdating(true);
       await dashboardService.markAsRead(id);
-      await loadSubmissions(); // إعادة تحميل البيانات
+      await loadSubmissions(); // Reload data
     } catch (error) {
       console.error('Failed to mark as read:', error);
-      setError('فشل في تمييز الطلب كمقروء');
+      setError(t('errors.markAsRead'));
     } finally {
       setIsUpdating(false);
     }
@@ -104,18 +106,18 @@ export default function DashboardPage() {
     try {
       setIsUpdating(true);
       await dashboardService.updateSubmissionStatus(id, newStatus);
-      await loadSubmissions(); // إعادة تحميل البيانات
-      await loadDashboardData(); // إعادة تحميل الإحصائيات
+      await loadSubmissions(); // Reload data
+      await loadDashboardData(); // Reload statistics
     } catch (error) {
       console.error('Failed to update status:', error);
-      setError('فشل في تحديث حالة الطلب');
+      setError(t('errors.updateStatus'));
     } finally {
       setIsUpdating(false);
     }
   };
 
   const handleDeleteSubmission = async (id: number) => {
-    if (!confirm('هل أنت متأكد من حذف هذا الطلب؟')) {
+    if (!confirm(t('confirmations.deleteSubmission'))) {
       return;
     }
 
@@ -126,7 +128,7 @@ export default function DashboardPage() {
       await loadDashboardData();
     } catch (error) {
       console.error('Failed to delete submission:', error);
-      setError('فشل في حذف الطلب');
+      setError(t('errors.deleteSubmission'));
     } finally {
       setIsUpdating(false);
     }
@@ -142,7 +144,7 @@ export default function DashboardPage() {
 
       const blob = await dashboardService.exportSubmissions(filters, 'excel');
       
-      // إنشاء رابط للتحميل
+      // Create download link
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
@@ -154,7 +156,7 @@ export default function DashboardPage() {
       
     } catch (error) {
       console.error('Failed to export data:', error);
-      setError('فشل في تصدير البيانات');
+      setError(t('errors.exportData'));
     } finally {
       setIsUpdating(false);
     }
@@ -166,7 +168,7 @@ export default function DashboardPage() {
       router.push(`/${locale}/login`);
     } catch (error) {
       console.error('Logout failed:', error);
-      // حتى لو فشل الطلب، نوجه للصفحة الرئيسية
+      // Even if request fails, redirect to login
       router.push(`/${locale}/login`);
     }
   };
@@ -183,10 +185,10 @@ export default function DashboardPage() {
 
   const getPriorityLabel = (priority: string) => {
     switch (priority) {
-      case 'urgent': return 'عاجل';
-      case 'high': return 'عالية';
-      case 'medium': return 'متوسطة';
-      case 'low': return 'منخفضة';
+      case 'urgent': return t('forms.priority.urgent');
+      case 'high': return t('forms.priority.high');
+      case 'medium': return t('forms.priority.medium');
+      case 'low': return t('forms.priority.low');
       default: return priority;
     }
   };
@@ -203,11 +205,11 @@ export default function DashboardPage() {
 
   const getFormTypeLabel = (formType: string) => {
     switch (formType) {
-      case 'contact': return 'نموذج التواصل';
-      case 'event-planning': return 'تخطيط الفعاليات';
-      case 'service-provider': return 'مقدمي الخدمات';
-      case 'partnership': return 'الشراكات';
-      case 'feedback': return 'التقييمات';
+      case 'contact': return t('forms.formTypes.contact');
+      case 'event-planning': return t('forms.formTypes.eventPlanning');
+      case 'service-provider': return t('forms.formTypes.serviceProvider');
+      case 'partnership': return t('forms.formTypes.partnership');
+      case 'feedback': return t('forms.formTypes.feedback');
       default: return formType;
     }
   };
@@ -221,7 +223,7 @@ export default function DashboardPage() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">جاري التحميل...</p>
+          <p className="mt-4 text-gray-600">{t('loading')}</p>
         </div>
       </div>
     );
@@ -234,8 +236,8 @@ export default function DashboardPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">لوحة التحكم</h1>
-              <p className="text-gray-600">مرحباً بعودتك</p>
+              <h1 className="text-3xl font-bold text-gray-900">{t('title')}</h1>
+              <p className="text-gray-600">{t('welcome')}</p>
             </div>
             <div className="flex space-x-4">
               <Button 
@@ -243,10 +245,10 @@ export default function DashboardPage() {
                 variant="outline"
                 disabled={isUpdating}
               >
-                {isUpdating ? '⏳' : '📊'} تصدير البيانات
+                {isUpdating ? '⏳' : '📊'} {t('exportData')}
               </Button>
               <Button onClick={handleLogout}>
-                تسجيل الخروج
+                {t('logout')}
               </Button>
             </div>
           </div>
@@ -265,59 +267,59 @@ export default function DashboardPage() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                إجمالي الطلبات
+                {t('overview.totalSubmissions')}
               </CardTitle>
               <span className="text-2xl">📝</span>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats.totalSubmissions}</div>
-              <p className="text-xs text-gray-500">+12% من الشهر الماضي</p>
+              <p className="text-xs text-gray-500">+12% {t('overview.monthlyGrowth')}</p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                قيد المراجعة
+                {t('overview.pendingReviews')}
               </CardTitle>
               <span className="text-2xl">⏳</span>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats.pendingReviews}</div>
-              <p className="text-xs text-gray-500">يحتاج مراجعة</p>
+              <p className="text-xs text-gray-500">{t('overview.needsReview')}</p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                المستخدمين النشطين
+                {t('overview.completedForms')}
               </CardTitle>
               <span className="text-2xl">👥</span>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats.completedForms}</div>
-              <p className="text-xs text-gray-500">نموذج مكتمل</p>
+              <p className="text-xs text-gray-500">{t('overview.completedForm')}</p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                إجمالي الإيرادات
+                {t('overview.totalRevenue')}
               </CardTitle>
               <span className="text-2xl">💰</span>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.totalRevenue.toLocaleString()} ر.س</div>
-              <p className="text-xs text-gray-500">+{stats.monthlyGrowth}% هذا الشهر</p>
+              <div className="text-2xl font-bold">{stats.totalRevenue.toLocaleString()}{locale === 'ar' ? ' ر.س' : ' SAR'}</div>
+              <p className="text-xs text-gray-500">+{stats.monthlyGrowth}% {t('overview.thisMonth')}</p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                حالة النظام
+                {t('overview.systemStatus')}
               </CardTitle>
               <span className="text-2xl">
                 {stats.systemStatus === 'online' ? '✅' : stats.systemStatus === 'maintenance' ? '🔧' : '❌'}
@@ -325,7 +327,7 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold capitalize">{stats.systemStatus}</div>
-              <p className="text-xs text-gray-500">آخر تحديث: منذ دقيقة</p>
+              <p className="text-xs text-gray-500">{t('overview.lastUpdate')}</p>
             </CardContent>
           </Card>
         </div>
@@ -336,11 +338,11 @@ export default function DashboardPage() {
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <span>📋</span>
-                <span>طلبات النماذج</span>
+                <span>{t('quickActions.formSubmissions.title')}</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-gray-600">إدارة طلبات النماذج</p>
+              <p className="text-sm text-gray-600">{t('quickActions.formSubmissions.description')}</p>
             </CardContent>
           </Card>
 
@@ -348,11 +350,11 @@ export default function DashboardPage() {
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <span>📄</span>
-                <span>إدارة المحتوى</span>
+                <span>{t('quickActions.contentManagement.title')}</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-gray-600">تحرير محتوى الموقع</p>
+              <p className="text-sm text-gray-600">{t('quickActions.contentManagement.description')}</p>
             </CardContent>
           </Card>
 
@@ -360,11 +362,11 @@ export default function DashboardPage() {
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <span>🖼️</span>
-                <span>مكتبة الوسائط</span>
+                <span>{t('quickActions.mediaLibrary.title')}</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-gray-600">إدارة الصور والملفات</p>
+              <p className="text-sm text-gray-600">{t('quickActions.mediaLibrary.description')}</p>
             </CardContent>
           </Card>
 
@@ -372,11 +374,11 @@ export default function DashboardPage() {
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <span>📈</span>
-                <span>التحليلات</span>
+                <span>{t('quickActions.analytics.title')}</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-gray-600">تقارير وإحصائيات</p>
+              <p className="text-sm text-gray-600">{t('quickActions.analytics.description')}</p>
             </CardContent>
           </Card>
         </div>
@@ -386,13 +388,13 @@ export default function DashboardPage() {
           <CardHeader>
             <div className="flex justify-between items-center">
               <div>
-                <CardTitle>طلبات النماذج</CardTitle>
-                <CardDescription>أحدث الطلبات المرسلة</CardDescription>
+                <CardTitle>{t('forms.title')}</CardTitle>
+                <CardDescription>{t('forms.description')}</CardDescription>
               </div>
                   <div className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <Input
-                        placeholder="البحث في الطلبات..."
+                        placeholder={t('searchPlaceholder')}
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="w-full"
@@ -402,12 +404,12 @@ export default function DashboardPage() {
                         onChange={(e) => setSelectedFormType(e.target.value)}
                         className="border border-gray-300 rounded-md px-3 py-2"
                       >
-                        <option value="all">جميع النماذج</option>
-                        <option value="contact">التواصل</option>
-                        <option value="event-planning">تخطيط الفعاليات</option>
-                        <option value="service-provider">مقدمي الخدمات</option>
-                        <option value="partnership">الشراكات</option>
-                        <option value="feedback">التقييمات</option>
+                        <option value="all">{t('allForms')}</option>
+                        <option value="contact">{t('forms.contact')}</option>
+                        <option value="event-planning">{t('forms.eventPlanning')}</option>
+                        <option value="service-provider">{t('forms.serviceProvider')}</option>
+                        <option value="partnership">{t('forms.partnership')}</option>
+                        <option value="feedback">{t('forms.feedback')}</option>
                       </select>
                       <Button 
                         onClick={() => {
@@ -418,7 +420,7 @@ export default function DashboardPage() {
                         variant="outline"
                         className="w-full"
                       >
-                        مسح الفلاتر
+                        {t('clearFilters')}
                       </Button>
                     </div>
                   </div>
@@ -439,7 +441,7 @@ export default function DashboardPage() {
                         <div className="flex items-center space-x-4 mb-3">
                           <h4 className="font-semibold text-lg">{submission.submitterName}</h4>
                           <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(submission.status)}`}>
-                            {submission.status === 'new' ? 'جديد' : submission.status === 'inProgress' ? 'قيد العمل' : submission.status === 'completed' ? 'مكتمل' : 'أرشيف'}
+                            {submission.status === 'new' ? t('forms.status.new') : submission.status === 'inProgress' ? t('forms.status.inProgress') : submission.status === 'completed' ? t('forms.status.completed') : t('forms.status.archived')}
                           </span>
                           <span className={`px-2 py-1 rounded-full text-xs border ${getPriorityColor(submission.priority)}`}>
                             {getPriorityLabel(submission.priority)}
@@ -456,11 +458,11 @@ export default function DashboardPage() {
                           </div>
                           <div>
                             <p className="text-xs text-gray-500">
-                              تاريخ الإرسال: {submission.submittedAt && formatDate(submission.submittedAt)}
+                              {t('forms.submittedAt')} {submission.submittedAt && formatDate(submission.submittedAt)}
                             </p>
                             {submission.lastUpdated && (
                               <p className="text-xs text-gray-500">
-                                آخر تحديث: {formatDate(submission.lastUpdated)}
+                                {t('forms.lastUpdated')} {formatDate(submission.lastUpdated)}
                               </p>
                             )}
                           </div>
@@ -483,7 +485,7 @@ export default function DashboardPage() {
 
                         {submission.assignedTo && (
                           <p className="text-xs text-blue-600 mb-2">
-                            👤 مُعيَّن إلى: {submission.assignedTo}
+                            👤 {t('forms.assignedTo')} {submission.assignedTo}
                           </p>
                         )}
                       </div>
@@ -497,7 +499,7 @@ export default function DashboardPage() {
                           onClick={() => submission.id && handleMarkAsRead(submission.id)}
                           disabled={isUpdating}
                         >
-                          ✓ تمييز كمقروء
+                          ✓ {t('forms.markAsRead')}
                         </Button>
                       )}
                       
@@ -507,17 +509,17 @@ export default function DashboardPage() {
                         className="text-xs border border-gray-300 rounded px-2 py-1"
                         disabled={isUpdating}
                       >
-                        <option value="new">جديد</option>
-                        <option value="inProgress">قيد العمل</option>
-                        <option value="completed">مكتمل</option>
-                        <option value="archived">أرشيف</option>
+                        <option value="new">{t('forms.status.new')}</option>
+                        <option value="inProgress">{t('forms.status.inProgress')}</option>
+                        <option value="completed">{t('forms.status.completed')}</option>
+                        <option value="archived">{t('forms.status.archived')}</option>
                       </select>
 
                       <Button
                         size="sm"
                         onClick={() => router.push(`/${locale}/dashboard/submissions/${submission.id}`)}
                       >
-                        📄 التفاصيل
+                        📄 {t('forms.details')}
                       </Button>
                       
                       <Button
@@ -525,7 +527,7 @@ export default function DashboardPage() {
                         variant="outline"
                         onClick={() => router.push(`/${locale}/dashboard/reply/${submission.id}`)}
                       >
-                        💬 رد
+                        💬 {t('forms.reply')}
                       </Button>
 
                       <Button
@@ -535,14 +537,14 @@ export default function DashboardPage() {
                         disabled={isUpdating}
                         className="text-red-600 hover:text-red-800"
                       >
-                        🗑️ حذف
+                        🗑️ {t('forms.delete')}
                       </Button>
                     </div>
                   </div>
                 ))
               ) : (
                 <div className="text-center py-12">
-                  <p className="text-gray-500">لا توجد طلبات حديثة</p>
+                  <p className="text-gray-500">{t('forms.noSubmissions')}</p>
                 </div>
               )}
             </div>
@@ -556,24 +558,24 @@ export default function DashboardPage() {
                     onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                     disabled={currentPage === 1 || isUpdating}
                   >
-                    ← السابق
+                    {t('forms.pagination.previous')}
                   </Button>
                   <span className="px-4 py-2 text-sm text-gray-600">
-                    صفحة {currentPage} من {totalPages}
+                    {t('forms.pagination.page')} {currentPage} {t('forms.pagination.of')} {totalPages}
                   </span>
                   <Button 
                     variant="outline"
                     onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                     disabled={currentPage === totalPages || isUpdating}
                   >
-                    التالي →
+                    {t('forms.pagination.next')}
                   </Button>
                 </div>
                 <Button 
                   variant="outline"
                   onClick={() => router.push(`/${locale}/dashboard/submissions`)}
                 >
-                  عرض جميع الطلبات
+                  {t('forms.viewAll')}
                 </Button>
               </div>
             )}

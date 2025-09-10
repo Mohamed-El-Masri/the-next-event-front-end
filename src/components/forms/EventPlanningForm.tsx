@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { formsService } from '@/lib/forms-service';
 import { EventPlanningFormData } from '@/lib/api-config';
 
@@ -10,6 +11,7 @@ interface EventPlanningFormProps {
 }
 
 export default function EventPlanningForm({ onSuccess, onError }: EventPlanningFormProps) {
+  const t = useTranslations('forms.eventPlanning');
   const [formData, setFormData] = useState<Partial<EventPlanningFormData>>({
     formType: 'event-planning',
     submitterName: '',
@@ -32,25 +34,25 @@ export default function EventPlanningForm({ onSuccess, onError }: EventPlanningF
   const [errors, setErrors] = useState<string[]>([]);
 
   const eventTypes = [
-    { value: 'corporate', label: 'فعاليات مؤسسية' },
-    { value: 'wedding', label: 'حفلات الزفاف' },
-    { value: 'cultural', label: 'فعاليات ثقافية' },
-    { value: 'innovation', label: 'فعاليات الابتكار' },
-    { value: 'conference', label: 'مؤتمرات' },
-    { value: 'other', label: 'أخرى' },
+    { value: 'corporate', label: t('eventTypes.corporate') },
+    { value: 'wedding', label: t('eventTypes.wedding') },
+    { value: 'cultural', label: t('eventTypes.cultural') },
+    { value: 'innovation', label: t('eventTypes.innovation') },
+    { value: 'conference', label: t('eventTypes.conference') },
+    { value: 'other', label: t('eventTypes.other') },
   ];
 
   const serviceOptions = [
-    'إدارة الفعاليات',
-    'القاعات والأماكن',
-    'الطعام والضيافة',
-    'الترفيه والعروض',
-    'التصميم والديكور',
-    'التكنولوجيا والصوتيات',
-    'التصوير والفيديو',
-    'الأمن والحماية',
-    'النقل والمواصلات',
-    'التسويق والإعلان',
+    t('services.eventManagement'),
+    t('services.venuesPlaces'),
+    t('services.foodHospitality'),
+    t('services.entertainmentShows'),
+    t('services.designDecoration'),
+    t('services.technologyAudio'),
+    t('services.photographyVideo'),
+    t('services.securityProtection'),
+    t('services.transportation'),
+    t('services.marketingAdvertising'),
   ];
 
   const handleInputChange = (field: keyof EventPlanningFormData, value: string | number | string[]) => {
@@ -75,7 +77,6 @@ export default function EventPlanningForm({ onSuccess, onError }: EventPlanningF
     setErrors([]);
 
     try {
-      // التحقق من صحة البيانات
       const validation = formsService.validateFormData('event-planning', formData as EventPlanningFormData);
       
       if (!validation.isValid) {
@@ -84,14 +85,11 @@ export default function EventPlanningForm({ onSuccess, onError }: EventPlanningF
         return;
       }
 
-      // إرسال البيانات
       const result = await formsService.submitEventPlanningForm(formData as EventPlanningFormData);
       
       if (onSuccess) {
         onSuccess(result);
       }
-
-      // إعادة تعيين النموذج
       setFormData({
         formType: 'event-planning',
         submitterName: '',
@@ -111,7 +109,7 @@ export default function EventPlanningForm({ onSuccess, onError }: EventPlanningF
       });
 
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'حدث خطأ أثناء إرسال النموذج';
+      const errorMessage = error instanceof Error ? error.message : t('messages.submitError');
       setErrors([errorMessage]);
       
       if (onError) {
@@ -126,10 +124,10 @@ export default function EventPlanningForm({ onSuccess, onError }: EventPlanningF
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
       <div className="mb-8">
         <h2 className="text-3xl font-bold text-[var(--navy)] mb-4">
-          نموذج تخطيط الفعاليات
+          {t('title')}
         </h2>
         <p className="text-gray-600">
-          املأ هذا النموذج للحصول على استشارة مجانية لتخطيط فعاليتك
+          {t('subtitle')}
         </p>
       </div>
 
@@ -144,75 +142,73 @@ export default function EventPlanningForm({ onSuccess, onError }: EventPlanningF
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* معلومات المرسل */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              الاسم الكامل *
+              {t('fields.submitterName.label')}
             </label>
             <input
               type="text"
               value={formData.submitterName}
               onChange={(e) => handleInputChange('submitterName', e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[var(--coral)] focus:border-[var(--coral)] transition-colors"
-              placeholder="اسمك الكامل"
+              placeholder={t('fields.submitterName.placeholder')}
               required
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              المؤسسة أو الشركة *
+              {t('fields.organization.label')}
             </label>
             <input
               type="text"
               value={formData.organization}
               onChange={(e) => handleInputChange('organization', e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[var(--coral)] focus:border-[var(--coral)] transition-colors"
-              placeholder="اسم المؤسسة أو الشركة"
+              placeholder={t('fields.organization.placeholder')}
               required
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              البريد الإلكتروني *
+              {t('fields.submitterEmail.label')}
             </label>
             <input
               type="email"
               value={formData.submitterEmail}
               onChange={(e) => handleInputChange('submitterEmail', e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[var(--coral)] focus:border-[var(--coral)] transition-colors"
-              placeholder="your@email.com"
+              placeholder={t('fields.submitterEmail.placeholder')}
               required
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              رقم الهاتف *
+              {t('fields.submitterPhone.label')}
             </label>
             <input
               type="tel"
               value={formData.submitterPhone}
               onChange={(e) => handleInputChange('submitterPhone', e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[var(--coral)] focus:border-[var(--coral)] transition-colors"
-              placeholder="+966 XXX XXX XXX"
+              placeholder={t('fields.submitterPhone.placeholder')}
               required
             />
           </div>
         </div>
 
-        {/* تفاصيل الفعالية */}
         <div className="space-y-6">
           <h3 className="text-xl font-semibold text-[var(--navy)] border-b border-gray-200 pb-2">
-            تفاصيل الفعالية
+            {t('sections.eventDetails')}
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                نوع الفعالية *
+                {t('fields.eventType.label')}
               </label>
               <select
                 value={formData.eventType}
@@ -230,7 +226,7 @@ export default function EventPlanningForm({ onSuccess, onError }: EventPlanningF
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                تاريخ الفعالية *
+                {t('fields.eventDate.label')}
               </label>
               <input
                 type="date"
@@ -244,35 +240,35 @@ export default function EventPlanningForm({ onSuccess, onError }: EventPlanningF
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              عنوان الفعالية *
+              {t('fields.eventTitle.label')}
             </label>
             <input
               type="text"
               value={formData.eventTitle}
               onChange={(e) => handleInputChange('eventTitle', e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[var(--coral)] focus:border-[var(--coral)] transition-colors"
-              placeholder="عنوان الفعالية"
+              placeholder={t('fields.eventTitle.placeholder')}
               required
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              وصف الفعالية
+              {t('fields.eventDescription.label')}
             </label>
             <textarea
               value={formData.eventDescription}
               onChange={(e) => handleInputChange('eventDescription', e.target.value)}
               rows={4}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[var(--coral)] focus:border-[var(--coral)] transition-colors"
-              placeholder="اكتب وصفاً تفصيلياً للفعالية..."
+              placeholder={t('fields.eventDescription.placeholder')}
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                مدة الفعالية (بالساعات) *
+                {t('fields.eventDuration.label')}
               </label>
               <input
                 type="number"
@@ -287,7 +283,7 @@ export default function EventPlanningForm({ onSuccess, onError }: EventPlanningF
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                عدد الضيوف المتوقع *
+                {t('fields.guestCount.label')}
               </label>
               <input
                 type="number"
@@ -301,41 +297,40 @@ export default function EventPlanningForm({ onSuccess, onError }: EventPlanningF
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                الميزانية المتوقعة
+                {t('fields.budget.label')}
               </label>
               <select
                 value={formData.budget}
                 onChange={(e) => handleInputChange('budget', e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[var(--coral)] focus:border-[var(--coral)] transition-colors"
               >
-                <option value="">اختر الميزانية</option>
-                <option value="less-than-50k">أقل من 50,000 ريال</option>
-                <option value="50k-100k">50,000 - 100,000 ريال</option>
-                <option value="100k-250k">100,000 - 250,000 ريال</option>
-                <option value="250k-500k">250,000 - 500,000 ريال</option>
-                <option value="more-than-500k">أكثر من 500,000 ريال</option>
+                <option value="">{t('budget.placeholder')}</option>
+                <option value="less-than-50k">{t('budget.lessThan50k')}</option>
+                <option value="50k-100k">{t('budget.50kTo100k')}</option>
+                <option value="100k-250k">{t('budget.100kTo250k')}</option>
+                <option value="250k-500k">{t('budget.250kTo500k')}</option>
+                <option value="more-than-500k">{t('budget.moreThan500k')}</option>
               </select>
             </div>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              المكان المقترح (اختياري)
+              {t('fields.venue.label')}
             </label>
             <input
               type="text"
               value={formData.venue}
               onChange={(e) => handleInputChange('venue', e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[var(--coral)] focus:border-[var(--coral)] transition-colors"
-              placeholder="اسم المكان أو المنطقة المفضلة"
+              placeholder={t('fields.venue.placeholder')}
             />
           </div>
         </div>
 
-        {/* الخدمات المطلوبة */}
         <div className="space-y-4">
           <h3 className="text-xl font-semibold text-[var(--navy)] border-b border-gray-200 pb-2">
-            الخدمات المطلوبة
+            {t('sections.requiredServices')}
           </h3>
           
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -353,21 +348,19 @@ export default function EventPlanningForm({ onSuccess, onError }: EventPlanningF
           </div>
         </div>
 
-        {/* متطلبات خاصة */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            متطلبات خاصة أو ملاحظات إضافية
+            {t('fields.specialRequirements.label')}
           </label>
           <textarea
             value={formData.specialRequirements}
             onChange={(e) => handleInputChange('specialRequirements', e.target.value)}
             rows={3}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[var(--coral)] focus:border-[var(--coral)] transition-colors"
-            placeholder="أي متطلبات خاصة أو تفاصيل إضافية..."
+            placeholder={t('fields.specialRequirements.placeholder')}
           />
         </div>
 
-        {/* زر الإرسال */}
         <div className="flex justify-center pt-6">
           <button
             type="submit"
@@ -378,7 +371,7 @@ export default function EventPlanningForm({ onSuccess, onError }: EventPlanningF
                 : 'bg-[var(--coral)] hover:bg-opacity-90 shadow-lg hover:shadow-xl'
             }`}
           >
-            {isSubmitting ? 'جارٍ الإرسال...' : 'إرسال طلب التخطيط'}
+            {isSubmitting ? t('buttons.submitting') : t('buttons.submit')}
           </button>
         </div>
       </form>

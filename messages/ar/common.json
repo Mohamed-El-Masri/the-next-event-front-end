@@ -84,7 +84,10 @@
       "organizationPlaceholder": "مؤسستك",
       "emailPlaceholder": "your@email.com",
       "phonePlaceholder": "+966 XXX XXX XXX",
-      "messagePlaceholder": "أخبرنا عن مشروعك..."
+      "messagePlaceholder": "أخبرنا عن مشروعك...",
+      "successMessage": "تم إرسال الرسالة بنجاح! سنتواصل معك قريباً.",
+      "errorMessage": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+      "sendingMessage": "جاري الإرسال..."
     }
   },
   "footer": {
@@ -98,6 +101,102 @@
     "english": "English",
     "arabic": "العربية",
     "copyright": "© 2024 الفعالية القادمة. جميع الحقوق محفوظة."
+  },
+  "forms": {
+    "eventPlanning": {
+      "title": "نموذج تخطيط الفعاليات",
+      "subtitle": "املأ هذا النموذج للحصول على استشارة مجانية لتخطيط فعاليتك",
+      "sections": {
+        "submitterInfo": "معلومات المرسل",
+        "eventDetails": "تفاصيل الفعالية",
+        "requiredServices": "الخدمات المطلوبة",
+        "specialRequirements": "متطلبات خاصة"
+      },
+      "fields": {
+        "submitterName": {
+          "label": "الاسم الكامل *",
+          "placeholder": "اسمك الكامل"
+        },
+        "organization": {
+          "label": "المؤسسة أو الشركة *",
+          "placeholder": "اسم المؤسسة أو الشركة"
+        },
+        "submitterEmail": {
+          "label": "البريد الإلكتروني *",
+          "placeholder": "your@email.com"
+        },
+        "submitterPhone": {
+          "label": "رقم الهاتف *",
+          "placeholder": "+966 XXX XXX XXX"
+        },
+        "eventType": {
+          "label": "نوع الفعالية *"
+        },
+        "eventTitle": {
+          "label": "عنوان الفعالية *",
+          "placeholder": "عنوان الفعالية"
+        },
+        "eventDescription": {
+          "label": "وصف الفعالية",
+          "placeholder": "اكتب وصفاً تفصيلياً للفعالية..."
+        },
+        "eventDate": {
+          "label": "تاريخ الفعالية *"
+        },
+        "eventDuration": {
+          "label": "مدة الفعالية (بالساعات) *"
+        },
+        "guestCount": {
+          "label": "عدد الضيوف المتوقع *"
+        },
+        "budget": {
+          "label": "الميزانية المتوقعة"
+        },
+        "venue": {
+          "label": "المكان المقترح (اختياري)",
+          "placeholder": "اسم المكان أو المنطقة المفضلة"
+        },
+        "specialRequirements": {
+          "label": "متطلبات خاصة أو ملاحظات إضافية",
+          "placeholder": "أي متطلبات خاصة أو تفاصيل إضافية..."
+        }
+      },
+      "eventTypes": {
+        "corporate": "فعاليات مؤسسية",
+        "wedding": "حفلات الزفاف",
+        "cultural": "فعاليات ثقافية",
+        "innovation": "فعاليات الابتكار",
+        "conference": "مؤتمرات",
+        "other": "أخرى"
+      },
+      "services": {
+        "eventManagement": "إدارة الفعاليات",
+        "venuesPlaces": "القاعات والأماكن",
+        "foodHospitality": "الطعام والضيافة",
+        "entertainmentShows": "الترفيه والعروض",
+        "designDecoration": "التصميم والديكور",
+        "technologyAudio": "التكنولوجيا والصوتيات",
+        "photographyVideo": "التصوير والفيديو",
+        "securityProtection": "الأمن والحماية",
+        "transportation": "النقل والمواصلات",
+        "marketingAdvertising": "التسويق والإعلان"
+      },
+      "budget": {
+        "placeholder": "اختر الميزانية",
+        "lessThan50k": "أقل من 50,000 ريال",
+        "50kTo100k": "50,000 - 100,000 ريال",
+        "100kTo250k": "100,000 - 250,000 ريال",
+        "250kTo500k": "250,000 - 500,000 ريال",
+        "moreThan500k": "أكثر من 500,000 ريال"
+      },
+      "buttons": {
+        "submit": "إرسال طلب التخطيط",
+        "submitting": "جارٍ الإرسال..."
+      },
+      "messages": {
+        "submitError": "حدث خطأ أثناء إرسال النموذج"
+      }
+    }
   },
   "auth": {
     "login": {
@@ -125,30 +224,98 @@
     "dashboard": {
       "title": "لوحة التحكم",
       "welcome": "مرحباً بعودتك",
+      "loading": "جاري التحميل...",
+      "logout": "تسجيل الخروج",
+      "exportData": "تصدير البيانات",
+      "clearFilters": "مسح الفلاتر",
+      "searchPlaceholder": "البحث في الطلبات...",
+      "allForms": "جميع النماذج",
       "overview": {
         "title": "نظرة عامة",
         "totalSubmissions": "إجمالي الطلبات",
         "pendingReviews": "قيد المراجعة",
         "activeUsers": "المستخدمين النشطين",
-        "systemStatus": "حالة النظام"
+        "completedForms": "النماذج المكتملة",
+        "totalRevenue": "إجمالي الإيرادات",
+        "systemStatus": "حالة النظام",
+        "monthlyGrowth": "من الشهر الماضي",
+        "needsReview": "يحتاج مراجعة",
+        "completedForm": "نموذج مكتمل",
+        "thisMonth": "هذا الشهر",
+        "lastUpdate": "آخر تحديث: منذ دقيقة"
+      },
+      "quickActions": {
+        "formSubmissions": {
+          "title": "طلبات النماذج",
+          "description": "إدارة طلبات النماذج"
+        },
+        "contentManagement": {
+          "title": "إدارة المحتوى",
+          "description": "تحرير محتوى الموقع"
+        },
+        "mediaLibrary": {
+          "title": "مكتبة الوسائط",
+          "description": "إدارة الصور والملفات"
+        },
+        "analytics": {
+          "title": "التحليلات",
+          "description": "تقارير وإحصائيات"
+        }
       },
       "forms": {
         "title": "طلبات النماذج",
-        "contact": "نماذج التواصل",
+        "description": "أحدث الطلبات المرسلة",
+        "contact": "التواصل",
         "eventPlanning": "تخطيط الفعاليات",
         "serviceProvider": "مقدمي الخدمات",
         "partnership": "الشراكات",
         "feedback": "التقييمات",
-        "viewAll": "عرض الكل",
+        "viewAll": "عرض جميع الطلبات",
         "markAsRead": "تمييز كمقروء",
         "reply": "رد",
-        "export": "تصدير",
+        "export": "تصدير البيانات",
+        "delete": "حذف",
+        "details": "التفاصيل",
+        "noSubmissions": "لا توجد طلبات حديثة",
+        "submittedAt": "تاريخ الإرسال:",
+        "lastUpdated": "آخر تحديث:",
+        "assignedTo": "مُعيَّن إلى:",
+        "pagination": {
+          "previous": "← السابق",
+          "next": "التالي →",
+          "page": "صفحة",
+          "of": "من"
+        },
+        "formTypes": {
+          "contact": "نموذج التواصل",
+          "eventPlanning": "تخطيط الفعاليات",
+          "serviceProvider": "مقدمي الخدمات",
+          "partnership": "الشراكات",
+          "feedback": "التقييمات"
+        },
+        "priority": {
+          "urgent": "عاجل",
+          "high": "عالية",
+          "medium": "متوسطة",
+          "low": "منخفضة"
+        },
         "status": {
           "new": "جديد",
           "inProgress": "قيد العمل",
           "completed": "مكتمل",
           "archived": "أرشيف"
         }
+      },
+      "errors": {
+        "loadSubmissions": "فشل في تحميل الطلبات",
+        "loadDashboard": "فشل في تحميل بيانات لوحة التحكم",
+        "markAsRead": "فشل في تمييز الطلب كمقروء",
+        "updateStatus": "فشل في تحديث حالة الطلب",
+        "deleteSubmission": "فشل في حذف الطلب",
+        "exportData": "فشل في تصدير البيانات"
+      },
+      "confirmations": {
+        "deleteSubmission": "هل أنت متأكد من حذف هذا الطلب؟"
       },
       "content": {
         "title": "إدارة المحتوى",
