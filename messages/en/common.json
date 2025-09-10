@@ -16,7 +16,9 @@
     "about": "About",
     "services": "Services",
     "projects": "Projects",
-    "contact": "Contact"
+    "contact": "Contact",
+    "login": "Login",
+    "dashboard": "Dashboard"
   },
   "about": {
     "title": "About Us",
@@ -96,5 +98,127 @@
     "english": "English",
     "arabic": "العربية",
     "copyright": "© 2024 The Next Event. All rights reserved."
+  },
+  "auth": {
+    "login": {
+      "title": "Sign In",
+      "subtitle": "Welcome back! Please sign in to your account.",
+      "email": "Email Address",
+      "emailPlaceholder": "Enter your email address",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot your password?",
+      "signInButton": "Sign In",
+      "signInLoading": "Signing in...",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up here",
+      "errors": {
+        "required": "This field is required",
+        "invalidEmail": "Please enter a valid email address",
+        "minPassword": "Password must be at least 6 characters",
+        "loginFailed": "Invalid email or password",
+        "networkError": "Network error. Please try again."
+      }
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "welcome": "Welcome back, {{name}}!",
+      "stats": {
+        "totalForms": "Total Forms",
+        "totalUsers": "Total Users",
+        "todaySubmissions": "Today's Submissions",
+        "activeEvents": "Active Events"
+      },
+      "quickActions": {
+        "title": "Quick Actions",
+        "viewForms": "View Forms",
+        "manageUsers": "Manage Users",
+        "createEvent": "Create Event",
+        "viewReports": "View Reports"
+      },
+      "recentActivity": {
+        "title": "Recent Activity",
+        "noActivity": "No recent activity"
+      },
+      "profile": {
+        "title": "Profile",
+        "editProfile": "Edit Profile",
+        "changePassword": "Change Password",
+        "logout": "Logout"
+      }
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "welcome": "Welcome back",
+      "overview": {
+        "title": "Overview",
+        "totalSubmissions": "Total Submissions",
+        "pendingReviews": "Pending Reviews",
+        "activeUsers": "Active Users",
+        "systemStatus": "System Status"
+      },
+      "forms": {
+        "title": "Form Submissions",
+        "contact": "Contact Forms",
+        "eventPlanning": "Event Planning",
+        "serviceProvider": "Service Providers",
+        "partnership": "Partnerships",
+        "feedback": "Feedback",
+        "viewAll": "View All",
+        "markAsRead": "Mark as Read",
+        "reply": "Reply",
+        "export": "Export",
+        "status": {
+          "new": "New",
+          "inProgress": "In Progress",
+          "completed": "Completed",
+          "archived": "Archived"
+        }
+      },
+      "content": {
+        "title": "Content Management",
+        "addNew": "Add New Content",
+        "edit": "Edit",
+        "delete": "Delete",
+        "publish": "Publish",
+        "draft": "Draft"
+      },
+      "media": {
+        "title": "Media Library",
+        "upload": "Upload Files",
+        "uploadMultiple": "Upload Multiple",
+        "totalFiles": "Total Files",
+        "totalSize": "Total Size"
+      },
+      "seo": {
+        "title": "SEO Management",
+        "metaTitle": "Meta Title",
+        "metaDescription": "Meta Description",
+        "keywords": "Keywords",
+        "addPage": "Add Page"
+      },
+      "email": {
+        "title": "Email Management",
+        "templates": "Templates",
+        "sendEmail": "Send Email",
+        "emailLogs": "Email Logs",
+        "statistics": "Statistics"
+      },
+      "analytics": {
+        "title": "Analytics",
+        "visitors": "Visitors",
+        "pageViews": "Page Views",
+        "conversions": "Conversions",
+        "bounceRate": "Bounce Rate"
+      },
+      "settings": {
+        "title": "Settings",
+        "general": "General",
+        "notifications": "Notifications",
+        "security": "Security",
+        "backup": "Backup"
+      }
+    }
   }
 }

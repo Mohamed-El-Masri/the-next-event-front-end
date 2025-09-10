@@ -16,7 +16,9 @@
     "about": "من نحن",
     "services": "الخدمات",
     "projects": "المشاريع",
-    "contact": "تواصل معنا"
+    "contact": "تواصل معنا",
+    "login": "تسجيل الدخول",
+    "dashboard": "لوحة التحكم"
   },
   "about": {
     "title": "من نحن",
@@ -96,5 +98,101 @@
     "english": "English",
     "arabic": "العربية",
     "copyright": "© 2024 الفعالية القادمة. جميع الحقوق محفوظة."
+  },
+  "auth": {
+    "login": {
+      "title": "تسجيل الدخول",
+      "subtitle": "مرحباً بك! يرجى تسجيل الدخول إلى حسابك.",
+      "email": "البريد الإلكتروني",
+      "emailPlaceholder": "أدخل البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "passwordPlaceholder": "أدخل كلمة المرور",
+      "rememberMe": "تذكرني",
+      "forgotPassword": "نسيت كلمة المرور؟",
+      "signInButton": "تسجيل الدخول",
+      "signInLoading": "جاري تسجيل الدخول...",
+      "noAccount": "ليس لديك حساب؟",
+      "signUp": "سجل هنا",
+      "errors": {
+        "required": "هذا الحقل مطلوب",
+        "invalidEmail": "يرجى إدخال بريد إلكتروني صالح",
+        "minPassword": "كلمة المرور يجب أن تكون 6 أحرف على الأقل",
+        "loginFailed": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+        "networkError": "خطأ في الشبكة. يرجى المحاولة مرة أخرى."
+      }
+    
+    },
+    "dashboard": {
+      "title": "لوحة التحكم",
+      "welcome": "مرحباً بعودتك",
+      "overview": {
+        "title": "نظرة عامة",
+        "totalSubmissions": "إجمالي الطلبات",
+        "pendingReviews": "قيد المراجعة",
+        "activeUsers": "المستخدمين النشطين",
+        "systemStatus": "حالة النظام"
+      },
+      "forms": {
+        "title": "طلبات النماذج",
+        "contact": "نماذج التواصل",
+        "eventPlanning": "تخطيط الفعاليات",
+        "serviceProvider": "مقدمي الخدمات",
+        "partnership": "الشراكات",
+        "feedback": "التقييمات",
+        "viewAll": "عرض الكل",
+        "markAsRead": "تمييز كمقروء",
+        "reply": "رد",
+        "export": "تصدير",
+        "status": {
+          "new": "جديد",
+          "inProgress": "قيد العمل",
+          "completed": "مكتمل",
+          "archived": "أرشيف"
+        }
+      },
+      "content": {
+        "title": "إدارة المحتوى",
+        "addNew": "إضافة محتوى جديد",
+        "edit": "تحرير",
+        "delete": "حذف",
+        "publish": "نشر",
+        "draft": "مسودة"
+      },
+      "media": {
+        "title": "مكتبة الوسائط",
+        "upload": "رفع ملفات",
+        "uploadMultiple": "رفع متعدد",
+        "totalFiles": "إجمالي الملفات",
+        "totalSize": "الحجم الكلي"
+      },
+      "seo": {
+        "title": "إدارة السيو",
+        "metaTitle": "عنوان الميتا",
+        "metaDescription": "وصف الميتا",
+        "keywords": "الكلمات المفتاحية",
+        "addPage": "إضافة صفحة"
+      },
+      "email": {
+        "title": "إدارة البريد الإلكتروني",
+        "templates": "القوالب",
+        "sendEmail": "إرسال بريد",
+        "emailLogs": "سجلات البريد",
+        "statistics": "الإحصائيات"
+      },
+      "analytics": {
+        "title": "التحليلات",
+        "visitors": "الزوار",
+        "pageViews": "مشاهدات الصفحة",
+        "conversions": "التحويلات",
+        "bounceRate": "معدل الارتداد"
+      },
+      "settings": {
+        "title": "الإعدادات",
+        "general": "عام",
+        "notifications": "الإشعارات",
+        "security": "الأمان",
+        "backup": "النسخ الاحتياطي"
+      }
+    }
   }
 }

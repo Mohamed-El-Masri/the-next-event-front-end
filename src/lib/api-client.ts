@@ -19,6 +19,8 @@ class ApiClient {
     this.token = token;
     if (typeof window !== 'undefined') {
       localStorage.setItem('auth_token', token);
+      // أيضاً حفظ في cookies للـ middleware
+      document.cookie = `auth_token=${token}; path=/; max-age=${7 * 24 * 60 * 60}; secure; samesite=strict`;
     }
   }
 
@@ -29,6 +31,8 @@ class ApiClient {
     this.token = null;
     if (typeof window !== 'undefined') {
       localStorage.removeItem('auth_token');
+      // حذف من cookies أيضاً
+      document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
   }
 

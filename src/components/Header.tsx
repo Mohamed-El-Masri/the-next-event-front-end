@@ -3,11 +3,14 @@
 import { useState, useEffect } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useRouter, usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, User } from 'lucide-react';
+import { authService } from '@/lib/auth-service';
+import Link from 'next/link';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const locale = useLocale();
   const t = useTranslations();
   const router = useRouter();
@@ -21,6 +24,11 @@ export default function Header() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    // التحقق من حالة تسجيل الدخول
+    setIsAuthenticated(authService.isAuthenticated());
+  }, [pathname]);
 
   const switchLanguage = (newLocale: string) => {
     const newPath = pathname.replace(`/${locale}`, `/${newLocale}`);
@@ -83,6 +91,24 @@ export default function Header() {
             >
               {t('navigation.contact')}
             </button>
+            
+            {/* Login/Dashboard Button */}
+            {isAuthenticated ? (
+              <Link
+                href="/dashboard"
+                className="flex items-center space-x-2 rtl:space-x-reverse bg-[var(--navy)] text-white px-4 py-2 rounded-lg hover:bg-[var(--navy)]/90 transition-colors font-medium"
+              >
+                <User className="h-4 w-4" />
+                <span>{t('navigation.dashboard')}</span>
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                className="bg-[var(--coral)] text-white px-4 py-2 rounded-lg hover:bg-[var(--coral)]/90 transition-colors font-medium"
+              >
+                {t('navigation.login')}
+              </Link>
+            )}
           </nav>
 
           {/* Language Switcher & Mobile Menu */}
@@ -155,6 +181,25 @@ export default function Header() {
               >
                 {t('navigation.contact')}
               </button>
+              
+              {/* Login/Dashboard Button for Mobile */}
+              {isAuthenticated ? (
+                <Link
+                  href="/dashboard"
+                  className="block w-full text-left py-2 text-gray-700 hover:text-[var(--navy)] transition-colors font-medium"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {t('navigation.dashboard')}
+                </Link>
+              ) : (
+                <Link
+                  href="/login"
+                  className="block w-full text-left py-2 text-gray-700 hover:text-[var(--navy)] transition-colors font-medium"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {t('navigation.login')}
+                </Link>
+              )}
             </div>
           </div>
         )}
