@@ -1,10 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../../components/ui/card';
 import { Button } from '../../../components/ui/button';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import ClientOnly from '../../../components/ClientOnly';
 
 interface DashboardStats {
   totalSubmissions: number;
@@ -39,6 +41,17 @@ export default function AdminHomePage() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Prevent hydration issues by not rendering until mounted
+  const [isMounted, setIsMounted] = useState(false);
+  
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -51,7 +64,8 @@ export default function AdminHomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <ClientOnly fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center"><div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div></div>}>
+      <div className="min-h-screen bg-gray-50" suppressHydrationWarning={true}>
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -139,7 +153,7 @@ export default function AdminHomePage() {
               <span className="text-2xl">💰</span>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.totalRevenue.toLocaleString()} ر.س</div>
+              <div className="text-2xl font-bold">{stats.totalRevenue.toLocaleString('ar-SA')} ر.س</div>
               <p className="text-xs text-green-600">+{stats.monthlyGrowth}% هذا الشهر</p>
             </CardContent>
           </Card>
@@ -262,5 +276,6 @@ export default function AdminHomePage() {
         </Card>
       </div>
     </div>
+    </ClientOnly>
   );
 }

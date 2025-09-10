@@ -1,12 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../../../components/ui/card';
 import { Button } from '../../../../components/ui/button';
 import { Input } from '../../../../components/ui/input';
 import { Alert, AlertDescription } from '../../../../components/ui/alert';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import ClientOnly from '../../../../components/ClientOnly';
 
 interface FormData {
   id: number;
@@ -164,6 +166,17 @@ export default function AdminFormsDataPage() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Prevent hydration issues by not rendering until mounted
+  const [isMounted, setIsMounted] = useState(false);
+  
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
+
   // Filter data based on search and filters
   const filteredData = formData.filter(item => {
     const matchesSearch = searchTerm === '' || 
@@ -248,6 +261,7 @@ export default function AdminFormsDataPage() {
   };
 
   const formatDate = (dateString: string) => {
+    if (typeof window === 'undefined') return dateString;
     return new Date(dateString).toLocaleDateString('ar-SA', {
       year: 'numeric',
       month: 'long',
@@ -269,7 +283,8 @@ export default function AdminFormsDataPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <ClientOnly fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center"><div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div></div>}>
+      <div className="min-h-screen bg-gray-50" suppressHydrationWarning={true}>
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -624,5 +639,6 @@ export default function AdminFormsDataPage() {
         </Card>
       </div>
     </div>
+    </ClientOnly>
   );
 }
